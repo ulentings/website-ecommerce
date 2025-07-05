@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Sembako Jaya</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 5px;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      color: #fff;
+    }
+    header {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.1rem;
+    }
+    nav {
+      background-color: #0b2e59;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 15px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+nav a.active {
+  background-color: #00ffff;
+  color: #0b2e59;
+    }
+    nav a:hover {
+      color: #00ffff;
+      background: rgba(255,255,255,0.1);
+    }
+    .container {
+      padding: 40px 20px;
+      display: none;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    .container.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .product {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    .product:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .product img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .btn {
+      background-color: #00c3ff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #0097cc;
+    }
+    #cart ul {
+      list-style: none;
+      padding: 0;
+    }
+    #cart li {
+      padding: 5px 0;
+    }
+    .whatsapp {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .whatsapp a {
+      background-color: #25D366;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .whatsapp a:hover {
+      background-color: #1ea855;
+    }
+    footer {
+      background-color: #0b2e59;
+      color: #fff;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 14px;
+      margin-top: 50px;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.2);
+    }
+    .testimonial {
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 5px solid #00c3ff;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+    }
+    .testimonial h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Toko Sembako Jaya</h1>
+    <p>Selamat datang di Toko Sembako Jaya, pusat kebutuhan rumah tangga Anda!</p>
+  </header>
+
+  <nav>
+    <a href="#" onclick="showPage('beranda')">Beranda</a>
+    <a href="#" onclick="showPage('produk')">Produk</a>
+    <a href="#" onclick="showPage('cart')">Keranjang</a>
+    <a href="#" onclick="showPage('tentang kami')">Tentang Kami</a>
+    <a href="#" onclick="showPage('testimoni')">Testimoni</a>
+  </nav>
+
+  <div class="container active" id="beranda">
+    <h2>Beranda</h2>
+    <p>Kami menyediakan berbagai macam kebutuhan sembako seperti beras, minyak, gula, mie instan, daging olahan, telur, dan kebutuhan dapur lainnya. Belanja hemat dan praktis hanya di Toko Sembako Jaya!</p>
+  </div>
+
+  <div class="container" id="produk">
+    <h2>Produk Kami</h2>
+    <div class="grid" id="product-list"></div>
+  </div>
+
+  <div class="container" id="cart">
+    <h2>Keranjang Pemesanan</h2>
+    <ul id="cart-items"></ul>
+    <p><strong>Total: Rp <span id="total">0</span></strong></p>
+<h3>Informasi Pemesan</h3>
+<label for="namaPembeli">Nama:</label><br>
+<input type="text" id="namaPembeli" name="namaPembeli" style="width:100%; padding:8px; margin:5px 0;"><br>
+
+<label for="alamatPembeli">Alamat:</label><br>
+<textarea id="alamatPembeli" name="alamatPembeli" rows="2" style="width:100%; padding:8px; margin:5px 0;"></textarea><br>
+  
+<label for="pembayaran">Pilih Metode Pembayaran:</label><br>
+<select id="pembayaran" name="pembayaran" style="width:100%; padding:8px; margin:5px 0;">
+  <option value="">-- Pilih Pembayaran --</option>
+  <option value="COD">Bayar di Tempat (COD)</option>
+  <option value="Transfer Bank">Transfer Bank</option>
+  <option value="QRIS">QRIS</option>
+ </select><br>
+<button class="btn" onclick="selesaikanPesanan()">Selesaikan Pesanan</button>
+    <div class="whatsapp">
+      <a id="wa-link" href="#" target="_blank">Pesan via WhatsApp</a>
+    </div>
+  </div>
+
+ <div class="container" id="tentang kami">
+  <h2>Tentang Kami</h2>
+  <p>Toko Sembako Jaya hadir untuk memenuhi kebutuhan rumah tangga Anda dengan pelayanan terbaik dan harga bersaing.</p>
+  <p><strong>WhatsApp:</strong> 085718807524</p>
+  <p><strong>Alamat:</strong> Jl. Cagar Alam Selatan No.27</p>
+  <p><strong>Jam Operasional:</strong> Setiap hari pukul 08.00 - 19.00</p>
+   </div>
+  </div>
+
+<div class="container" id="testimoni">
+  <h2>Testimoni Pelanggan</h2>
+  <div class="testimonial">
+    <h4>Rina - Jakarta</h4>
+<p><strong>Rating:</strong> 10/10</p>
+    <p>"Pelayanannya cepat dan barang sampai dalam kondisi baik. Harga juga affordable!"</p>
+  </div>
+  <div class="testimonial">
+    <h4>Budi - Bandung</h4>
+<p><strong>Rating:</strong> 8/10</p>
+    <p>"Belanja di sini sangat memudahkan saya, apalagi bisa langsung pesan lewat WhatsApp."</p>
+  </div>
+  <div class="testimonial">
+    <h4>Siti - Surabaya</h4>
+<p><strong>Rating:</strong> 10/10</p>
+     <p>"Produk lengkap dan selalu ready stock. Toko sembako favorit keluarga kami!"</p>
+  </div>
+
+   <div style="margin-top:30px;">
+    <h3>Berikan Testimoni Anda</h3>
+    <form action="mailto:tokosembakojaya@example.com" method="post" enctype="text/plain">
+      <label for="nama">Nama:</label><br>
+      <input type="text" id="nama" name="nama" style="width:100%; padding:8px; margin:5px 0;"><br>
+      <label for="pesan">Testimoni:</label><br>
+      <textarea id="pesan" name="pesan" rows="4" style="width:100%; padding:8px; margin:5px 0;"></textarea><br>
+      <label for="rating">Rating Belanja (1-10):</label><br>
+      <input type="number" id="rating" name="rating" min="1" max="10" style="width:100%; padding:8px; margin:5px 0;"><br>
+      </select><br>
+      <button type="submit" class="btn">Kirim Testimoni</button>
+    </form>
+  </div>
+</div>
+  
+  <footer>
+    &copy; 2025 Toko Sembako Jaya. Semua hak dilindungi undang-undang.
+  </footer>
+
+  <script>
+    const products = [
+     { name: "Beras Topi Koki Setra Ramos 5kg", price: 72000, img: "beras1.jpeg" },
+      { name: "Beras Topi Koki Long Grain Crystal 5kg", price: 70000, img: "beras2.jpeg" },
+      { name: "Beras Topi Koki Short Grain Heritage 5kg", price: 73000, img: "beras3.jpeg" },
+      { name: "Beras Topi Koki Super Slyp 5kg", price: 71000, img: "beras4.jpeg" },
+      { name: "Minyak Goreng Camar 1lt", price: 17000, img: "minyak 1lt.jpeg" },
+      { name: "Minyak Goreng Camar 2lt", price: 33000, img: "minyak 2lt.jpeg" },
+      { name: "Gula Kastor Royal Semut 500g", price: 13000, img: "gula.jpeg" },
+      { name: "Mie Instan Kare rasa Kari Sapi", price: 3500, img: "kare sapi.jpeg" },
+      { name: "Mie Instan Kare rasa Kari Ayam", price: 3500, img: "kare ayam.jpeg" },
+      { name: "Yomas Beef Saikoro", price: 56000, img: "saikoro.jpeg" },
+      { name: "Yomas Beef Slice", price: 49000, img: "slice.jpeg" },
+      { name: "Yomas Sosis Sapi", price: 23000, img: "sosis.jpeg" },
+      { name: "Yomas Kornet Daging Ayam", price: 19000, img: "kornet.jpeg" },
+      { name: "Yomas Bakso Sapi", price: 25000, img: "bakso.jpeg" },
+      { name: "Telur So Fresh", price: 28000, img: "telur.jpeg" },
+      { name: "Garam Omaku 250g", price: 3000, img: "garam.jpeg" },
+      { name: "Susu PediaSure 200gr", price: 85000, img: "susu.jpeg" },
+      { name: "Tepung Bola Salju 1kg", price: 12000, img: "tepung.jpeg" }
+    ];
+
+    const cart = [];
+
+    function updateCart() {
+  const cartItems = document.getElementById("cart-items");
+  const total = document.getElementById("total");
+  const waLink = document.getElementById("wa-link");
+
+  cartItems.innerHTML = "";
+  let totalPrice = 0;
+  let waMessage = "Halo, saya ingin memesan:%0A";
+
+  cart.forEach((item, index) => {
+      cartItems.innerHTML += `
+      <li>
+        ${item.name} - Rp ${item.price.toLocaleString()}
+        <button onclick="hapusDariCart(${index})" style="margin-left:10px; background:red; color:white; border:none; padding:4px 10px; border-radius:5px;">Hapus</button>
+      </li>
+    `;
+    totalPrice += item.price;
+    waMessage += `- ${item.name} (Rp ${item.price.toLocaleString()})%0A`;
+  });
+
+  total.textContent = totalPrice.toLocaleString();
+
+  const nama = document.getElementById("namaPembeli")?.value || "";
+  const alamat = document.getElementById("alamatPembeli")?.value || "";
+  const metode = document.getElementById("pembayaran")?.value || "";
+
+  waMessage += `%0ANama: ${nama}%0AAlamat: ${alamat}%0APilih Metode Pembayaran: ${metode}%0ATotal: Rp ${totalPrice.toLocaleString()}`;
+  waLink.href = `https://wa.me/08671234567?text=${waMessage}`;
+}
+
+    function addToCart(product) {
+  cart.push(product);
+  updateCart();
+  alert(`${product.name} telah ditambahkan ke keranjang!`);
+    }
+
+    const productList = document.getElementById("product-list");
+    products.forEach(product => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <img src="${product.img}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p>Rp ${product.price.toLocaleString()}</p>
+        <button class="btn" onclick='addToCart(${JSON.stringify(product)})'>Tambah ke Keranjang</button>
+      `;
+      productList.appendChild(div);
+    });
+
+   function showPage(id) {
+   document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(link => {
+    if (link.getAttribute('onclick')?.includes(`'${id}'`)) {
+      link.classList.add('active');
+    }
+  });
+}1
+  function selesaikanPesanan() {
+  alert("Terima kasih! Pesanan Anda telah diproses dan akan segera dikonfirmasi lewat WhatsApp.");
+    }
+["namaPembeli", "alamatPembeli", "pembayaran"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("input", updateCart);
+});
+function hapusDariCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+  </script>
+</body>
+</html>
